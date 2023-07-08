@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player - Demo (Subhajit Roy) </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/music-note.png" type="icon">
+    <script src="https://kit.fontawesome.com/29ec3bd98a.js" crossorigin="anonymous"></script>
+    <script type ="module" src="/main.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+            <img src="images/montu-pilot-mashup-subhajit-ro----w800_q70_----1610559262387.jpg" class="songimg" alt="songimg">
+            <h1>Montu Pilot Mashup</h1>
+            <p>Subhajit Roy (Edit Lab Production), Rup </p>
+            <audio id="song">
+                <source src="media/Montu Pilot Mashup - Subhajit Roy, DJ Rup (Edit Lab Production) (hearthis.at).mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="progress">
+
+            <div class="controls"> 
+                <div><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playpause()"><i class="fa-solid fa-play" id="ctrlicon"></i></div>
+                <div><i class="fa-solid fa-forward"></i></div>
+            </div>
+        </div>
+    </div>
+<script>
+    let progress=document.getElementById("progress");
+    let song=document.getElementById("song");
+    let ctrlicon=document.getElementById("ctrlicon");
+
+    song.onloadedmetadata = function(){
+        progress.max=song.duration;
+        progress.value=song.currentTime;
+    }
+
+    function playpause(){
+        if(ctrlicon.classList.contains("fa-pause")){
+            song.pause();
+            ctrlicon.classList.remove("fa-pause");
+            ctrlicon.classList.add("fa-play");
+        }
+        else{
+            song.play();
+            ctrlicon.classList.add("fa-pause");
+            ctrlicon.classList.remove("fa-play");
+        }
+    }
+
+    if(song.play()){
+        setInterval(()=>{
+            progress.value = song.currentTime;
+        },500);
+    }
+    progress.onchange=function(){
+        song.play();
+        song.currentTime = progress.value;
+        ctrlicon.classList.add("fa-pause");
+        ctrlicon.classList.remove("fa-play");
+    }
+</script>
+</body>
+</html>
